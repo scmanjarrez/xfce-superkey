@@ -1,7 +1,7 @@
 INSTALL=install
-PREFIX=/usr
+PREFIX=/usr/local
 
-TARGET := ksuperkey
+TARGET := xfce-superkey
 
 CFLAGS += -Wall
 CFLAGS += `pkg-config --cflags xtst x11`

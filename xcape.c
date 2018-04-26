@@ -111,15 +111,12 @@ int main (int argc, char **argv)
     rec_range->device_events.first = KeyPress;
     rec_range->device_events.last = ButtonRelease;
 
-    while ((ch = getopt (argc, argv, "de:t:")) != -1)
+    while ((ch = getopt (argc, argv, "d:t:")) != -1)
     {
         switch (ch)
         {
         case 'd':
             self->debug = True;
-            break;
-        case 'e':
-            mapping = optarg;
             break;
         case 't':
             {
@@ -296,8 +293,6 @@ Key_t *key_add_key (Key_t *keys, KeyCode key)
 void handle_key (XCape_t *self, KeyMap_t *key,
         Bool mouse_pressed, int key_event)
 {
-    Key_t *k;
-
     if (key_event == KeyPress)
     {
         if (self->debug) fprintf (stdout, "Key pressed!\n");
@@ -326,23 +321,7 @@ void handle_key (XCape_t *self, KeyMap_t *key,
 
             if (!self->timeout_valid || timercmp (&timev, &self->timeout, <))
             {
-                for (k = key->to_keys; k != NULL; k = k->next)
-                {
-                    if (self->debug) fprintf (stdout, "Generating %s!\n",
-                            XKeysymToString (XkbKeycodeToKeysym (self->ctrl_conn,
-                                    k->key, 0, 0)));
-
-                    XTestFakeKeyEvent (self->ctrl_conn,
-                            k->key, True, 0);
-                    self->generated = key_add_key (self->generated, k->key);
-                }
-                for (k = key->to_keys; k != NULL; k = k->next)
-                {
-                    XTestFakeKeyEvent (self->ctrl_conn,
-                            k->key, False, 0);
-                    self->generated = key_add_key (self->generated, k->key);
-                }
-                XFlush (self->ctrl_conn);
+                system("xfce4-popup-whiskermenu");
             }
         }
         key->used = False;
