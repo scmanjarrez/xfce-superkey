@@ -111,7 +111,7 @@ int main (int argc, char **argv)
     rec_range->device_events.first = KeyPress;
     rec_range->device_events.last = ButtonRelease;
 
-    while ((ch = getopt (argc, argv, "d:t:")) != -1)
+    while ((ch = getopt (argc, argv, "dt:")) != -1)
     {
         switch (ch)
         {
@@ -321,7 +321,7 @@ void handle_key (XCape_t *self, KeyMap_t *key,
 
             if (!self->timeout_valid || timercmp (&timev, &self->timeout, <))
             {
-                system("xfce4-popup-whiskermenu");
+                system("xfce4-popup-whiskermenu -p");
             }
         }
         key->used = False;
